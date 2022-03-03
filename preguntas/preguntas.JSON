@@ -1,0 +1,85 @@
+{
+  "response_code": 0,
+  "results": [
+    {
+      "category": "Entertainment: Books",
+      "type": "multiple",
+      "difficulty": "hard",
+      "question": "¿Cuántos años vive un galápago??",
+      "correct_answer": "25-35",
+      "incorrect_answers": ["50-60", "+100", "70-90"]
+    },
+    {
+      "category": "Entertainment: Books",
+      "type": "multiple",
+      "difficulty": "hard",
+      "question": "¿De qué se alimentan los koalas?",
+      "correct_answer": "Hojas de eucalipto",
+      "incorrect_answers": ["Manzanas", "Insectos", "Aves"]
+    },
+    {
+      "category": "Entertainment: Books",
+      "type": "multiple",
+      "difficulty": "hard",
+      "question": "¿Quién inventó el telescopio?",
+      "correct_answer": "Hans Lippershey",
+      "incorrect_answers": ["Michael Jackson", "Edison", "Rick James"]
+    },
+    {
+      "category": "Entertainment: Books",
+      "type": "multiple",
+      "difficulty": "hard",
+      "question": "¿Cuál fue la primera película de Walt Disney?",
+      "correct_answer": "Blancanieves y los siete enanitos",
+      "incorrect_answers": ["Peter Pan", "Gladiator", "Bambi"]
+    },
+    {
+      "category": "Entertainment: Books",
+      "type": "multiple",
+      "difficulty": "hard",
+      "question": "¿Cuántos satélites tenemos orbitando alrededor de la tierra?",
+      "correct_answer": "4.256",
+      "incorrect_answers": ["3.527", "1.419", "152"]
+    },
+    {
+      "category": "Entertainment: Books",
+      "type": "multiple",
+      "difficulty": "hard",
+      "question": "¿Cuál es la ciudad más poblada mundo??",
+      "correct_answer": "Tokio",
+      "incorrect_answers": ["Shangai", "Sidney", "Londres"]
+    },
+    {
+      "category": "Entertainment: Books",
+      "type": "multiple",
+      "difficulty": "hard",
+      "question": " ¿En qué año comenzó la II Guerra Mundial?",
+      "correct_answer": "1939",
+      "incorrect_answers": ["1929", "1938", "1932"]
+    },
+    {
+      "category": "Entertainment: Books",
+      "type": "multiple",
+      "difficulty": "hard",
+      "question": "¿Por cultivar qué producto es conocido Guatemala?",
+      "correct_answer": "Café",
+      "incorrect_answers": ["Té", "Cocaina", "Tamales"]
+    },
+    {
+      "category": "Entertainment: Books",
+      "type": "multiple",
+      "difficulty": "hard",
+      "question": "¿Qué deporte practicaba Carl Lewis?",
+      "correct_answer": "Atletismo",
+      "incorrect_answers": ["Futbol", "Golf", "Tenis"]
+    },
+    {
+      "category": "Entertainment: Books",
+      "type": "multiple",
+      "difficulty": "hard",
+      "question": " ¿Cuál es la capital de Kosovo?",
+      "correct_answer": "Pristina",
+      "incorrect_answers": ["Kiev", "Moscú", "Adirma"]
+    }
+  ]
+}

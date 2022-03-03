@@ -4,10 +4,45 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Dancing+Script&family=Lobster&family=Oswald:wght@500&family=Poppins:wght@500&display=swap");
+    </style>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Bebas+Neue&family=Dancing+Script&family=Lobster&family=Oswald:wght@500&family=Poppins:wght@500&family=Righteous&display=swap");
+    </style>
     <link rel="stylesheet" href="./css/styles.css" />
-    <title>Document</title>
+    <title>QuizResults</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js"></script>
   </head>
+
   <body>
-    <script src="./JS/script.js"></script>
+    <header class="quiz__header">
+      <a class="quiz__title" href="./home.html">QUIZ</a>
+      <p class="quiz__user__results"></p>
+    </header>
+
+    <main class="results__main">
+        <div class="results_title_canvas">
+          <p class="results__title">These are your results!</p>
+          <p class="results__copy">
+            8 HITS / 10 QUESTIONS</p>
+          <canvas class="results__canvas" ></canvas>
+
+        </div>
+        <div class="results__buttom__content">
+            <p class="results__thanks">Thanks</p>
+            <p class="results__subTitle">QUIZ 2.0</p>
+            <img class="results__gif" src="./assets/quiz_animation_blue.gif"></img>
+          <a href="./question.html"
+            ><button class="results__buttom">TRY AGAIN</button></a
+          >
+        </div>
+    </main>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <script src="./JS/script_results.js"></script>
   </body>
 </html>
