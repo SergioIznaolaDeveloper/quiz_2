@@ -18,24 +18,8 @@ const createUser = (user) => {
 };
 
 /*VARIABLES GLOBALES*/
-/*traer JSON preguntas propias*/
-const usQ =  fetch("./preguntas/preguntas.JSON")
-.then(response => {
-  return response.json();
-})
-.then(usQ => console.log(usQ.results[1].correct_answer));
 
-
-
-/*Obtener y dar formato a la fecha*/
-const date = new Date();
-let fecha =
-  date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 /*Otras*/
-let userAnsw = [];
-let contador = 0;
-let selection = document.getElementsByName("question");
-let form = document.querySelector(".form__section");
 let response;
 let nameBd;
 
@@ -46,12 +30,8 @@ firebase.auth().languageCode = "es";
 let nameUser = JSON.parse(localStorage.getItem("user"));
 let mailUser = JSON.parse(localStorage.getItem("mail"));
 let userLog;
-/*FUNCION GENERADOR DE NUMERO ALEATORIO*/
-function randomizer() {
-  let max = 49;
-  let min = 0;
-  return Math.floor(Math.random() * max) + min;
-}
+
+
 /*RECORRER BASE DE DATOS*/
 const traerUsuarios = () => {
   db.collection("quiz2")
@@ -88,8 +68,11 @@ async function login() {
         email: response.user.email,
       },
     ];
+
     /*datos al firebase*/
-    // crearUsuario();
+
+    crearUsuario();
+    
     /*datos al localStorage*/
     localStorage.setItem("user", JSON.stringify(user));
     /*boton de try*/
@@ -117,17 +100,7 @@ const signOut = () => {
       console.log("hubo un error: " + error);
     });
 };
-/*FUNCIÓN PARA IMPRIMIR  EL NOMBRE EN EL HEADER DE QUESTION DESDE STORAGE*/
 
-async function nameUserQ() {
-  if (typeof JSON.parse(localStorage.getItem("user")) === "object") {
-    document.querySelector(
-      ".quiz__user__question"
-    ).innerHTML = `${nameUser[0].nombre}`;
-  } else {
-    document.querySelector(".quiz__user__question").innerHTML = ``;
-  }
-}
 /*FUNCION GRÁFICA HOME en base al log*/
 async function getVariables() {
   try {
@@ -173,85 +146,14 @@ async function keep() {
   }
 }
 
-/*FUNCIÓN FETCH y ASIGNACION DE PREGUNTAS*/
-async function getQuestions() {
-  try {
-    /*llamada a imprimir el nombre desde storage*/
-    nameUserQ();
-    let response = await fetch(
-      `https://opentdb.com/api.php?amount=50&type=multiple`
-    );
-    let data = await response.json();
-    /*OBJETO PREGUNTA RANDOM*/
-    let randomQ = data.results[randomizer()];
-    /*ENUNCIADO DE LA PREGUNTA*/
-    let question = randomQ.question;
-    /*RESPUESTAS INCORRECTAS*/
-    let answers = randomQ.incorrect_answers;
-    /*RESPUESTA CORRECTA*/
-    correct_answer = randomQ.correct_answer;
-    console.log("Correcta - " + correct_answer);
-    /*LISTA CON LAS 4 RESPUESTAS POSIBLES EN ORDEN ALEATORIO*/
-    answers.push(correct_answer);
-    answers.sort();
-    /*INSERCION DE LAS RESPUESTAS EN LOS LABELS*/
-    document.querySelector("#r1").innerHTML = answers[0];
-    document.querySelector("#r2").innerHTML = answers[2];
-    document.querySelector("#r3").innerHTML = answers[1];
-    document.querySelector("#r4").innerHTML = answers[3];
-    document.querySelector(".form__question").innerHTML = question;
-
-    console.log(contador);
-    console.log(userAnsw);
-
-    /*LLAMADA A EVALUQUIZ*/
-    document
-      .querySelector(".form__section")
-      .addEventListener("submit", evalQuiz);
-
-    // console.log(selection);
-  } catch (error) {
-    console.log(`ERROR Error: ${error.stack}`);
-  }
-}
-
-/*FUNCIÓN PARA EVALUAR LA RESPUESTA SELECIONADA*/
-function evalQuiz(event) {
-  event.preventDefault();
-  for (i = 0; i < selection.length; i++) {
-    /*VALIDACIÓN DEL CHECHK*/
-    if (selection[i].checked === true) {
-      /*AÑADIMOS LA RESPUESTA CORRECTA A UNA LISTA*/
-      let selectAnsw = document.querySelectorAll(".text")[i].innerHTML;
-      userAnsw.push(selectAnsw);
-      form.reset();
-      getQuestions();
-      if (correct_answer === selectAnsw) {
-        contador += 1;
-      }
-    }
-    /* CAMBIAR BOTON DE NEXT A FINALIZE */
-    if (userAnsw.length === 9) {
-      document.querySelector(".form__buttom_1").innerHTML = "FINALIZE";
-    }
-    /* CAMBIAR BOTÓN A RESULTADOS*/
-    if (userAnsw.length === 10) {
-      alert(`Has acertado ${contador} preguntas`);
-      /* contador a la base de datos aqui*/
-      /* cambio de botones y redirect*/
-      document.querySelector(".form__buttom_1").style.display = "none";
-      document.querySelector(".form__buttom_2").style.display = "block";
-      let borrar = document.querySelector(".form_content");
-      form.removeChild(borrar);
-      document.querySelector(".form__question").innerHTML =
-        "How many questions do you think you got right?";
-      document.querySelector(".form__gif").style.display = "block";
-    }
-  }
-}
-
-/*llamada al questionario*/
-getQuestions();
+/*continua sesion abierta*/
+// document
+//   .querySelector(".home__buttom")
+//   .addEventListener("click", async (e) => {
+//     try {
+//       await keep();
+//     } catch (error) {}
+//   });
 
 /*llamada al login con boton*/
 document

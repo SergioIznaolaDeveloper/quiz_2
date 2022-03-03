@@ -8,7 +8,7 @@ body {
   justify-content: center;
   text-align: center;
 }
-a{
+a {
   text-decoration: none;
 }
 .quiz__header {
@@ -24,6 +24,7 @@ a{
   position: fixed;
   top: 0;
 }
+.quiz__user__results,
 .quiz__user__question,
 .quiz__user {
   margin: 10px 20px;
@@ -36,6 +37,7 @@ a{
   margin: 10px 20px;
   color: white;
 }
+.results__main,
 .quiz__main {
   display: flex;
   flex-flow: column;
@@ -48,7 +50,6 @@ a{
 
 /*HOME*/
 .home__log {
-  
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -95,7 +96,7 @@ a{
   font-family: "Lobster", cursive;
   color: #22577a;
 }
-
+.results__subTitle,
 .home__subTitle {
   margin: 0px 20px 0px;
   text-align: center;
@@ -103,7 +104,7 @@ a{
   font-size: 41px;
   color: #57cc99;
 }
-
+.results__gif,
 .home__gif {
   margin: 0px;
   display: none;
@@ -144,7 +145,7 @@ a{
   color: #22577a;
 }
 .home__buttom {
-  display:none;
+  display: none;
   background-color: #22577a;
   border-radius: 10px;
   border: 0px;
@@ -310,6 +311,89 @@ input[type="radio"]:checked + label {
   box-shadow: 0px 0px 7px #80ed99;
 }
 
+/*RESULTS*/
+
+.results__section {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+.results_title_canvas {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: white;
+  width: 260px;
+  margin: 25px 0px 10px;
+  box-shadow: 0em 0em 0.5em 0px #22577a;
+}
+.results__buttom__content {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin: 10px 25px;
+  background: white;
+  width: 260px;
+  box-shadow: 0em 0em 0.5em 0px #22577a;
+}
+
+.results__title {
+  font-family: "Lobster";
+  font-size: 25px;
+  color: #22577a;
+  margin: 10px 0px 0px 0px;
+}
+
+.results__canvas {
+  margin-bottom: 0px;
+}
+.results__thanks {
+  font-family: "Lobster";
+  font-size: 30px;
+  color: #22577a;
+  margin: 10px 0px 0px 0px;
+}
+
+.results__gif {
+  transform: scale(117%);
+}
+.results__copy {
+  background-color: #57cc99;
+  padding: 0px 10px;
+  border-radius: 10px;
+  font-family: "Righteous", cursive;
+  font-size: 18px;
+  color: #052939;
+  margin: 5px 0px 0px 0px;
+}
+
+.results__buttom {
+  background-color: #22577a;
+  border-radius: 10px;
+  border: 0px;
+  color: white;
+  width: 150px;
+  height: 50px;
+  font-size: 20px;
+  margin: 10px 0px 15px;
+  font-family: "Righteous", cursive;
+  transition: 0.3s;
+}
+.results__buttom:hover {
+  background-color: #c7f9cc;
+  border: #80ed99 solid 2px;
+  color: #052939;
+  box-shadow: 0px 0px 5px #22577a78;
+}
+
 @media screen and (min-width: 768px) {
   /*HOME*/
   .home__log {
@@ -351,6 +435,7 @@ input[type="radio"]:checked + label {
     width: 160px;
     height: 200px;
   }
+  .results__main,
   .quiz__main {
     display: flex;
     flex-flow: row;
@@ -428,5 +513,58 @@ input[type="radio"]:checked + label {
   input[type="radio"]:checked + label {
     width: 300px;
     height: 80px;
+  }
+
+  /*RESULTS*/
+  .results__main {
+    flex-flow: row;
+  }
+  .results_title_canvas {
+    margin: 25px;
+    width: 360px;
+  }
+  .results__buttom__content {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin: 25px 25px;
+    background: white;
+    width: 260px;
+    box-shadow: 0em 0em 0.5em 0px #22577a;
+  }
+  .results__subTitle {
+    margin-top: 0px;
+    margin-bottom: 5px;
+  }
+
+  .results__title {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 25px;
+  }
+
+  .results__thanks {
+    font-size: 30px;
+    margin: 25px 0px 0px 0px;
+  }
+  .results__gif {
+    margin: 0px;
+    display: block;
+    width: 160px;
+    height: 190px;
+  }
+  .results__canvas {
+    transform: scale(90%);
+    margin: 15px;
+    margin-top: -15px;
+    margin-bottom: 0px;
+  }
+  .results__buttom {
+    margin: 17px 0px 32px;
   }
 }
