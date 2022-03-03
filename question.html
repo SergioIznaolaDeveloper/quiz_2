@@ -12,10 +12,13 @@
     </style>
     <link rel="stylesheet" href="./css/styles.css" />
     <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js"></script>
   </head>
   <body>
     <header class="quiz__header">
-      <a class="quiz__title" href="./home.html">QUIZ/Temática</a>
+      <a class="quiz__title" href="./home.html">QUIZ</a>
+      <p class="quiz__user__question"></p>
+
     </header>
     <main class="quiz__main">
       <form class="form__section">
@@ -48,6 +51,11 @@
          <button class="form__buttom_2" type="submit"><a href="./home.html">GET RESULTS</a></button>
       </form>
     </main>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
     <script src="./JS/script.js"></script>
   </body>
 </html>

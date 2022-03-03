@@ -12,22 +12,38 @@
     </style>
     <link rel="stylesheet" href="./css/styles.css" />
     <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js"></script>
   </head>
   <body>
     <header class="quiz__header">
       <a class="quiz__title" href="./home.html">QUIZ</a>
+      <p class="quiz__user"></p>
+
     </header>
     <main class="quiz__main">
       <section class="home__wellcome">
-        <p class="home__title">Bienvenido</p>
+        <p class="home__title">Wellcome</p>
         <p class="home__subTitle">QUIZ 2.0</p>
         <img class="home__gif" src="./assets/quiz_animation_blue.gif"></img>
         <a href="./question.html"
-          ><button class="home__buttom" type="submit">INTÉNTALO</button></a
+          ><button class="home__buttom" type="submit">TRY QUIZ</button></a
         >
       </section>
-      <section class="home_status"></section>
+      <section class="home__status">
+
+        <canvas class="home__canvas"></canvas>
+        <p class="home__status__title">Log in to PLAY and see your statistics</p>
+        <div class="home__log">
+        <button class="home__buttom__login" type="submit">LOGIN</button>
+        <button class="home__buttom__logout" type="submit">LOGOUT</button>
+      </div>
+      </section>
     </main>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
     <script src="./JS/script.js"></script>
   </body>
 </html>
