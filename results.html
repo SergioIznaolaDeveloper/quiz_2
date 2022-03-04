@@ -1,13 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Dancing+Script&family=Lobster&family=Oswald:wght@500&family=Poppins:wght@500&display=swap");
+    </style>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Bebas+Neue&family=Dancing+Script&family=Lobster&family=Oswald:wght@500&family=Poppins:wght@500&family=Righteous&display=swap");
+    </style>
     <link rel="stylesheet" href="./css/styles.css" />
     <title>Document</title>
-  </head>
-  <body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <header class="quiz__header">
+        <a class="quiz__title" href="./home.html">QUIZ/RESULTS</a>
+    </header>
+    <main class="quiz__main">
+        <div id="results__container">
+            <p id="results__title">This are your results!</p>
+            <div class="organized__results">
+                <div id="chart__container">
+                    <canvas id="results__chart"></canvas>
+                </div>
+                <div id="button__p">
+                    <p class="results__text">Here you can see the results of your test. These will be saved in your
+                        profile so you can see
+                        your improvement.The more you do it, the more you'll know!</p>
+                    <a href="./question.html"><button class="home__buttom" type="submit">START AGAIN</button></a>
+                </div>
+            </div>
+        </div>
+    </main>
     <script src="./JS/script.js"></script>
-  </body>
+</body>
+
 </html>

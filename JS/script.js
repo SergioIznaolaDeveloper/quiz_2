@@ -77,3 +77,28 @@ async function getQuestions() {
   }
 }
 getQuestions();
+
+//GRÁFICA RESULTADOS TEST
+//Datos de la gráfica
+async function getVariables() {
+  try {
+    var ctx = document.querySelector("#results__chart");
+    new Chart(ctx, {
+      type: "pie",
+      data: {
+        labels: ["Successful answers", "Wrong answers"],
+        datasets: [
+          {
+            label: "aciertos",
+            data: [5, 5],
+            backgroundColor: ["rgb(56,163,165, 0.8)", "rgb(87,204,153, 0.8)"]
+          },
+        ],
+      },
+    });
+  } catch (error) {
+    console.log(`ERROR Error: ${error.stack}`);
+  }
+}
+
+getVariables()

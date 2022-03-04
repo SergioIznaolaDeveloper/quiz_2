@@ -35,6 +35,7 @@ body {
   background-color: #38a3a5;
   margin-top: 45px;
 }
+
 /*HOME*/
 .home__title {
   margin: 20px 20px 0px 20px;
@@ -55,7 +56,6 @@ body {
 .home__gif {
   margin: 0px;
   display: none;
-
 }
 .form__gif {
   margin: 0px;
@@ -253,6 +253,55 @@ input[type="radio"]:checked + label {
   box-shadow: 0px 0px 7px #80ed99;
 }
 
+/*RESULTS*/
+
+#results__container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: white;
+  margin: 25px;
+  font-size: 26px;
+  box-shadow: 0em 0em 0.5em 0px #22577a;
+}
+
+#results__title {
+  font-family: "Lobster";
+  font-size: 25px;
+  color: #22577a;
+}
+
+#chart__container {
+  margin: 0 auto;
+}
+
+#results__chart {
+  max-width: 100%;
+  margin: 20px;
+}
+
+.results__text {
+  font-family: Lobster;
+  color: #22577a;
+  font-size: 20px;
+  margin: 25px;
+}
+
+.organized__results {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+}
+
+#button__p {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-evenly;
+  margin: 0 auto;
+}
+
 @media screen and (min-width: 768px) {
   /*HOME*/
 
@@ -333,5 +382,39 @@ input[type="radio"]:checked + label {
   input[type="radio"]:checked + label {
     width: 300px;
     height: 80px;
+  }
+
+  /*RESULTS*/
+
+  #results__container {
+    width: 900px;
+    max-height: 600px;
+  }
+
+  #results__title {
+    font-size: 40px;
+    margin: 30px auto;
+  }
+  
+  .organized__results {
+    flex-flow: row;
+  }
+
+  #chart__container {
+    margin: 20px auto;
+  }
+
+  .results__text {
+    font-size: 25px;
+  }
+
+  #button__p {
+    margin: 30px;
+  }
+
+  #results__chart {
+    max-width: 400px;
+    max-height: 500px;
+    margin: 25px;
   }
 }
