@@ -80,7 +80,7 @@ getQuestions();
 
 //GRÁFICA RESULTADOS TEST
 //Datos de la gráfica
-async function getVariables() {
+async function getVariables2() {
   try {
     var ctx = document.querySelector("#results__chart");
     new Chart(ctx, {
@@ -101,4 +101,4 @@ async function getVariables() {
   }
 }
 
-getVariables()
+getVariables2()
