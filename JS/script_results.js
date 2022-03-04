@@ -64,11 +64,11 @@ async function getVariables2() {
     new Chart(ctx2, {
       type: "polarArea",
       data: {
-        labels: [8+"/10"],
+        labels: [6 + "/10"],
         datasets: [
           {
             label: "aciertos",
-            data: [8,10],
+            data: [6, 10],
             backgroundColor: ["rgb(56,163,165, 0.8)", "rgb(87,204,153, 0.0)"],
           },
         ],
