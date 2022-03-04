@@ -60,16 +60,16 @@ async function nameUserQ() {
 /*FUNCION GRÁFICA RESULTS en base al log*/
 async function getVariables2() {
   try {
-    var ctx2 = document.querySelector(".results__canvas");
-    new Chart(ctx2, {
-      type: "polarArea",
+    var ctx = document.querySelector(".results__canvas");
+    new Chart(ctx, {
+      type: "pie",
       data: {
-        labels: [6 + "/10"],
+        labels: ["Successful answers", "Wrong answers"],
         datasets: [
           {
             label: "aciertos",
-            data: [6, 10],
-            backgroundColor: ["rgb(56,163,165, 0.8)", "rgb(87,204,153, 0.0)"],
+            data: [6, 4],
+            backgroundColor: ["rgb(56,163,165, 0.8)", "rgb(87,204,153, 0.8)"]
           },
         ],
       },
