@@ -82,19 +82,16 @@ async function login() {
     response = await firebase.auth().signInWithPopup(provider);
     userLog = response.user.displayName;
     document.querySelector(".quiz__user").innerHTML = `${userLog}`;
-<<<<<<< HEAD
     document.querySelector(".home__buttom").style.display = "block";
     // document.querySelector(".question__user").innerHTML = `${userLog}`;
-=======
     /*datos al sessionStorage*/
->>>>>>> b7aba13b4abd3f6d2b853ec4c3310906393f145d
+
     let user = [
       {
         nombre: response.user.displayName,
         email: response.user.email,
       },
     ];
-<<<<<<< HEAD
 
     
     /*datos al firebase*/
@@ -104,12 +101,10 @@ async function login() {
 
     /*datos al sessionStorage*/
     sessionStorage.setItem("user", JSON.stringify(user));
-=======
     sessionStorage.setItem("user", JSON.stringify(user));
     /*datos al firebase*/
     // crearUsuario();
     traerPartidas();
->>>>>>> b7aba13b4abd3f6d2b853ec4c3310906393f145d
     /*boton de try*/
     return response;
   } catch (error) {
