@@ -27,8 +27,8 @@ let nameBd;
 let provider = new firebase.auth.GoogleAuthProvider();
 firebase.auth().languageCode = "es";
 /*variables storage*/
-let nameUser = JSON.parse(localStorage.getItem("user"));
-let mailUser = JSON.parse(localStorage.getItem("mail"));
+let nameUser = JSON.parse(sessionStorage.getItem("user"));
+let mailUser = JSON.parse(sessionStorage.getItem("mail"));
 let userLog;
 
 
@@ -61,6 +61,7 @@ async function login() {
     response = await firebase.auth().signInWithPopup(provider);
     userLog = response.user.displayName;
     document.querySelector(".quiz__user").innerHTML = `${userLog}`;
+    document.querySelector(".home__buttom").style.display = "block";
     // document.querySelector(".question__user").innerHTML = `${userLog}`;
     let user = [
       {
@@ -69,14 +70,15 @@ async function login() {
       },
     ];
 
-    /*datos al firebase*/
-
-    crearUsuario();
     
-    /*datos al localStorage*/
-    localStorage.setItem("user", JSON.stringify(user));
+    /*datos al firebase*/
+    // if (error.code !== 'auth/account-exists-with-different-credential') {
+    // crearUsuario();
+    // }
+
+    /*datos al sessionStorage*/
+    sessionStorage.setItem("user", JSON.stringify(user));
     /*boton de try*/
-    document.querySelector(".home__buttom").style.display = "block";
     return response;
   } catch (error) {
     throw new Error(error);
@@ -161,7 +163,7 @@ document
   .addEventListener("click", async (e) => {
     try {
       await login();
-    } catch (error) {}
+    } catch (error) { }
   });
 
 /*llamado al log out con boton*/
