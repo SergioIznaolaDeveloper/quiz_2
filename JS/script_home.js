@@ -22,6 +22,7 @@ let response;
 let nameBd;
 let nombreBdresults;
 let dateBd;
+let allUsers = [];
 /*VARIABLE DATABASE*/
 let provider = new firebase.auth.GoogleAuthProvider();
 firebase.auth().languageCode = "es";
@@ -64,6 +65,7 @@ const traerUsuarios = () => {
       querySnapshot.forEach((doc) => {
         nameBd = doc.data().nombre;
         mailBd = doc.data().mail;
+        console.log(mailBd);
       });
     });
 };
@@ -76,6 +78,9 @@ crearUsuario = () => {
   });
 };
 
+
+
+
 /*FUNCION LOGIN*/
 async function login() {
   try {
@@ -84,8 +89,8 @@ async function login() {
     document.querySelector(".quiz__user").innerHTML = `${userLog}`;
     document.querySelector(".home__buttom").style.display = "block";
     // document.querySelector(".question__user").innerHTML = `${userLog}`;
-    /*datos al sessionStorage*/
 
+    /*datos al sessionStorage*/
     let user = [
       {
         nombre: response.user.displayName,
@@ -93,11 +98,31 @@ async function login() {
       },
     ];
 
-    
+
+    //Consultar si la cuenta tiene un correo ya existente, y crearlo en caso de que no esté guardado en la base de datos.
+
+    const queryExisting = () => {
+      db.collection("quiz2")
+        .get()
+        .then((querySnapshot) => {
+          allUsers = []
+          querySnapshot.forEach((doc) => {
+            mailBd = doc.data().mail;
+            if (mailBd == user[0].email) {
+              allUsers.push(user[0].email)
+              console.log('el usuario ya existe en Firebase');
+            }
+          })
+          if (allUsers.length === 0) {
+            crearUsuario()
+            console.log(`se ha creado un nuevo usuario en Firebase con email ${user[0].email}`);
+          }
+          })
+    }
+    queryExisting();
+
     /*datos al firebase*/
-    // if (error.code !== 'auth/account-exists-with-different-credential') {
-    // crearUsuario();
-    // }
+
 
     /*datos al sessionStorage*/
     sessionStorage.setItem("user", JSON.stringify(user));
