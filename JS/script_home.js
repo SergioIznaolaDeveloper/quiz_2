@@ -22,16 +22,16 @@ let response;
 let nameBd;
 let nombreBdresults;
 let dateBd;
-let allUsers = [];
 /*VARIABLE DATABASE*/
 let provider = new firebase.auth.GoogleAuthProvider();
 firebase.auth().languageCode = "es";
-resuladosBdUsuario = [];
-dateDbUsuario = [];
+let resuladosBdUsuario = [];
+let dateDbUsuario = [];
 /*variables storage*/
 let nameUser = JSON.parse(sessionStorage.getItem("user"));
 let mailUser = JSON.parse(sessionStorage.getItem("mail"));
 let userLog;
+let allUsers = [];
 
 /*TRAER PUNTIUACIONES DEL USUARIO*/
 async function traerPartidas() {
@@ -48,7 +48,7 @@ async function traerPartidas() {
         }
       });
       /*array con todoas las puntuaciones de usuario en firebase*/
-      resuladosBdUsuario.sort((a, b) => a - b).reverse();
+      // resuladosBdUsuario.sort((a, b) => a - b).reverse();
       document.querySelector(".home__canvas__default").style.display = "none";
       document.querySelector(".home__canvas").style.display = "block";
       console.log(resuladosBdUsuario);
@@ -65,21 +65,33 @@ const traerUsuarios = () => {
       querySnapshot.forEach((doc) => {
         nameBd = doc.data().nombre;
         mailBd = doc.data().mail;
-        console.log(mailBd);
       });
     });
 };
 
 /*CREAR USUARIO FIREBASE*/
 crearUsuario = () => {
-  createUser({
-    nombre: response.user.displayName,
-    mail: response.user.email,
-  });
+  db.collection("quiz2")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        mailBd = doc.data().mail;
+        if (mailBd === response.user.email) {
+          allUsers.push(response.user.email);
+        }
+      });
+      console.log(allUsers.length);
+      if (allUsers.length >= 1) {
+        console.log("El usuario ya existe en firebase");
+      } else {
+        console.log("El usuario no existe");
+        createUser({
+          nombre: response.user.displayName,
+          mail: response.user.email,
+        });
+      }
+    });
 };
-
-
-
 
 /*FUNCION LOGIN*/
 async function login() {
@@ -87,9 +99,6 @@ async function login() {
     response = await firebase.auth().signInWithPopup(provider);
     userLog = response.user.displayName;
     document.querySelector(".quiz__user").innerHTML = `${userLog}`;
-    document.querySelector(".home__buttom").style.display = "block";
-    // document.querySelector(".question__user").innerHTML = `${userLog}`;
-
     /*datos al sessionStorage*/
     let user = [
       {
@@ -97,40 +106,13 @@ async function login() {
         email: response.user.email,
       },
     ];
-
-
-    //Consultar si la cuenta tiene un correo ya existente, y crearlo en caso de que no esté guardado en la base de datos.
-
-    const queryExisting = () => {
-      db.collection("quiz2")
-        .get()
-        .then((querySnapshot) => {
-          allUsers = []
-          querySnapshot.forEach((doc) => {
-            mailBd = doc.data().mail;
-            if (mailBd == user[0].email) {
-              allUsers.push(user[0].email)
-              console.log('el usuario ya existe en Firebase');
-            }
-          })
-          if (allUsers.length === 0) {
-            crearUsuario()
-            console.log(`se ha creado un nuevo usuario en Firebase con email ${user[0].email}`);
-          }
-          })
-    }
-    queryExisting();
-
-    /*datos al firebase*/
-
-
-    /*datos al sessionStorage*/
-    sessionStorage.setItem("user", JSON.stringify(user));
     sessionStorage.setItem("user", JSON.stringify(user));
     /*datos al firebase*/
-    // crearUsuario();
+
+    crearUsuario();
     traerPartidas();
     /*boton de try*/
+    document.querySelector(".home__buttom").style.display = "block";
     return response;
   } catch (error) {
     throw new Error(error);
@@ -139,6 +121,11 @@ async function login() {
 
 /* FUNCTION LOGOUT*/
 const signOut = () => {
+  /*limpiar los arrays con datos anteriores*/
+  resuladosBdUsuario = [];
+  dateDbUsuario = [];
+  allUsers = [];
+  /*llamada al logOut*/
   let user = firebase.auth().currentUser;
   firebase
     .auth()
@@ -152,6 +139,7 @@ const signOut = () => {
         .querySelector(".home__buttom__logout")
         .addEventListener("click", signOut);
     })
+
     .catch((error) => {
       console.log("hubo un error: " + error);
     });
@@ -180,7 +168,7 @@ async function getVariablesUser() {
               resuladosBdUsuario[2],
               resuladosBdUsuario[3],
               resuladosBdUsuario[4],
-              6,
+              1,
               7,
               8,
               9,
@@ -223,7 +211,7 @@ document
   .addEventListener("click", async (e) => {
     try {
       await login();
-    } catch (error) { }
+    } catch (error) {}
   });
 
 /*llamado al log out con boton*/

@@ -29,8 +29,23 @@ let nameBd;
 let puntos;
 let date;
 /*fecha*/
+const monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Novr",
+  "Decr",
+];
 const f = new Date();
-let fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+let fecha = f.getDate() + "/" + monthNames[f.getMonth()];
+
 /*VARIABLE DATABASE*/
 let provider = new firebase.auth.GoogleAuthProvider();
 firebase.auth().languageCode = "es";
@@ -152,8 +167,6 @@ function evalQuiz(event) {
     if (userAnsw.length === 9) {
       document.querySelector(".form__buttom_1").innerHTML = "FINALIZE";
     } else if (userAnsw.length === 10) {
-      /* CAMBIAR BOTÓN A RESULTADOS*/
-      alert(`Has acertado ${contador} preguntas`);
       /* contador y fecha a firebase y storage*/
       crearResultadosStorage();
       crearResultadosBd();
