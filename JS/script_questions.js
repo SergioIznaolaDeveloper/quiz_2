@@ -26,13 +26,32 @@ let selection = document.getElementsByName("question");
 let form = document.querySelector(".form__section");
 let response;
 let nameBd;
+let puntos;
+let date;
+/*fecha*/
+const monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Novr",
+  "Decr",
+];
+const f = new Date();
+let fecha = f.getDate() + "/" + monthNames[f.getMonth()];
 
 /*VARIABLE DATABASE*/
 let provider = new firebase.auth.GoogleAuthProvider();
 firebase.auth().languageCode = "es";
 /*variables storage*/
-let nameUser = JSON.parse(localStorage.getItem("user"));
-let mailUser = JSON.parse(localStorage.getItem("mail"));
+let nameUser = JSON.parse(sessionStorage.getItem("user"));
+let mailUser = JSON.parse(sessionStorage.getItem("mail"));
 let userLog;
 /*FUNCION GENERADOR DE NUMERO ALEATORIO*/
 function randomizer() {
@@ -41,43 +60,9 @@ function randomizer() {
   return Math.floor(Math.random() * max) + min;
 }
 
-/*COMPROBAR USUARIOS*/
+console.log(fecha);
 
-/*FUNCIÓN PARA IMPRIMIR  EL NOMBRE EN EL HEADER DE QUESTION DESDE STORAGE*/
-
-async function nameUserQ() {
-  if (typeof JSON.parse(localStorage.getItem("user")) === "object") {
-    document.querySelector(
-      ".quiz__user__question"
-    ).innerHTML = `${nameUser[0].nombre}`;
-  } else {
-    document.querySelector(".quiz__user__question").innerHTML = ``;
-  }
-}
-
-/*SESION CONTINUA*/
-function keep() {
-  try {
-    firebase
-      .auth()
-      .setPersistence(firebase.auth.Auth.Persistence.NONE)
-      .then(() => {
-        var provider = new firebase.auth.GoogleAuthProvider();
-        // In memory persistence will be applied to the signed in Google user
-        // even though the persistence was set to 'none' and a page redirect
-        // occurred.
-        return firebase.auth().signInWithRedirect(provider);
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-      });
-  } catch (error) {
-    throw new Error(error);
-  }
-}
-/*RECORRER BASE DE DATOS*/
+/*FUNCIÓN PARA IMPRIMIR  EL NOMBRE EN EL HEADER DE QUESTION DESDE FIREBASE*/
 const traerUsuario = () => {
   db.collection("quiz2")
     .get()
@@ -85,20 +70,44 @@ const traerUsuario = () => {
       querySnapshot.forEach((doc) => {
         nameBd = doc.data().nombre;
         mailBd = doc.data().mail;
-        if (doc.data().nombre === nameUser[0].nombre) {
-          console.log(contador);
+        if (mailBd === nameUser[0].email) {
+          console.log(
+            nameBd + " es el usuario de firebase que esta jugando ahora mismo"
+          );
+          document.querySelector(
+            ".quiz__user__question"
+          ).innerHTML = `${nameBd}`;
         }
       });
     });
 };
 
+/*FUNCIÓN PARA AÑADIR LOS ACIERTOS A FIREBASE*/
+crearResultadosBd = () => {
+  db.collection("resultados").doc().set({
+    nombre: nameUser[0].nombre,
+    resultados: contador,
+    date: fecha,
+  });
+};
+/*FUNCIÓN PARA AÑADIR LOS ACIERTOS A SESSION STORAGE*/
 
+crearResultadosStorage = () => {
+  let results = [
+    {
+      resultados: contador,
+      date: fecha,
+    },
+  ];
+  sessionStorage.setItem("results", JSON.stringify(results));
+};
+/*datos al sessionStorage*/
 
 /*FUNCIÓN FETCH y ASIGNACION DE PREGUNTAS*/
 async function getQuestions() {
   try {
     /*llamada a imprimir el nombre desde storage*/
-    nameUserQ();
+    traerUsuario();
     /*fetch de api y de JSON propio*/
     let response = await fetch(
       `https://opentdb.com/api.php?amount=50&type=multiple`
@@ -132,7 +141,7 @@ async function getQuestions() {
     /*LLAMADA A EVALUQUIZ*/
     document
       .querySelector(".form__section")
-      .addEventListener("submit", evalQuiz, keep);
+      .addEventListener("submit", evalQuiz);
     // console.log(selection);
   } catch (error) {
     console.log(`ERROR Error: ${error.stack}`);
@@ -157,12 +166,10 @@ function evalQuiz(event) {
     /* CAMBIAR BOTON DE NEXT A FINALIZE */
     if (userAnsw.length === 9) {
       document.querySelector(".form__buttom_1").innerHTML = "FINALIZE";
-    }
-    /* CAMBIAR BOTÓN A RESULTADOS*/
-    if (userAnsw.length === 10) {
-      traerUsuario();
-      alert(`Has acertado ${contador} preguntas`);
-      /* contador a la base de datos aqui*/
+    } else if (userAnsw.length === 10) {
+      /* contador y fecha a firebase y storage*/
+      crearResultadosStorage();
+      crearResultadosBd();
       /* cambio de botones y redirect*/
       document.querySelector(".form__buttom_1").style.display = "none";
       document.querySelector(".form__buttom_2").style.display = "block";
@@ -177,5 +184,3 @@ function evalQuiz(event) {
 
 /*llamada al questionario*/
 getQuestions();
-
-console.log(nameUser[0].nombre);

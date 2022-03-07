@@ -24,6 +24,7 @@ a {
   position: fixed;
   top: 0;
 }
+
 .quiz__user__results,
 .quiz__user__question,
 .quiz__user {
@@ -86,6 +87,12 @@ a {
   box-shadow: 0px 0px 5px #22577a78;
 }
 .home__canvas {
+  display: none;
+  margin-top: 10px;
+  max-width: 70%;
+}
+.home__canvas__default {
+  display: block;
   margin-top: 10px;
   max-width: 70%;
 }
@@ -354,6 +361,8 @@ input[type="radio"]:checked + label {
 
 .results__canvas {
   margin-bottom: 0px;
+  transform: scale(85%);
+  margin-top: -15px;
 }
 .results__thanks {
   font-family: "Lobster";
@@ -428,6 +437,12 @@ input[type="radio"]:checked + label {
   .home__canvas {
     max-width: 80%;
     margin: 20px;
+    transform: scaleY(120%);
+  }
+  .home__canvas__default {
+    max-width: 80%;
+    margin: 20px;
+    transform: scaleY(120%);
   }
   .home__gif {
     margin: 0px;
@@ -460,7 +475,7 @@ input[type="radio"]:checked + label {
     margin: 25px;
   }
   .home__status__title {
-    margin: 0px 30px 5px;
+    margin: 15px 30px 10px;
     font-size: 25px;
     font-family: "Righteous", cursive;
     color: #22577a;
@@ -559,7 +574,7 @@ input[type="radio"]:checked + label {
     height: 190px;
   }
   .results__canvas {
-    transform: scale(90%);
+    transform: scale(85%);
     margin: 15px;
     margin-top: -15px;
     margin-bottom: 0px;

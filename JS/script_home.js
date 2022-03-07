@@ -18,19 +18,44 @@ const createUser = (user) => {
 };
 
 /*VARIABLES GLOBALES*/
-
-/*Otras*/
 let response;
 let nameBd;
-
+let nombreBdresults;
+let dateBd;
 /*VARIABLE DATABASE*/
 let provider = new firebase.auth.GoogleAuthProvider();
 firebase.auth().languageCode = "es";
+let resuladosBdUsuario = [];
+let dateDbUsuario = [];
 /*variables storage*/
-let nameUser = JSON.parse(localStorage.getItem("user"));
-let mailUser = JSON.parse(localStorage.getItem("mail"));
+let nameUser = JSON.parse(sessionStorage.getItem("user"));
+let mailUser = JSON.parse(sessionStorage.getItem("mail"));
 let userLog;
+let allUsers = [];
 
+/*TRAER PUNTIUACIONES DEL USUARIO*/
+async function traerPartidas() {
+  db.collection("resultados")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        dateBd = doc.data().date;
+        resultsBd = doc.data().resultados;
+        nombreBdresults = doc.data().nombre;
+        if (nombreBdresults === response.user.displayName) {
+          resuladosBdUsuario.push(resultsBd);
+          dateDbUsuario.push(dateBd);
+        }
+      });
+      /*array con todoas las puntuaciones de usuario en firebase*/
+      // resuladosBdUsuario.sort((a, b) => a - b).reverse();
+      document.querySelector(".home__canvas__default").style.display = "none";
+      document.querySelector(".home__canvas").style.display = "block";
+      console.log(resuladosBdUsuario);
+      console.log(dateDbUsuario);
+      getVariablesUser();
+    });
+}
 
 /*RECORRER BASE DE DATOS*/
 const traerUsuarios = () => {
@@ -40,20 +65,33 @@ const traerUsuarios = () => {
       querySnapshot.forEach((doc) => {
         nameBd = doc.data().nombre;
         mailBd = doc.data().mail;
-        return mailBd;
       });
     });
 };
 
 /*CREAR USUARIO FIREBASE*/
 crearUsuario = () => {
-  createUser({
-    nombre: response.user.displayName,
-    mail: response.user.email,
-  });
+  db.collection("quiz2")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        mailBd = doc.data().mail;
+        if (mailBd === response.user.email) {
+          allUsers.push(response.user.email);
+        }
+      });
+      console.log(allUsers.length);
+      if (allUsers.length >= 1) {
+        console.log("El usuario ya existe en firebase");
+      } else {
+        console.log("El usuario no existe");
+        createUser({
+          nombre: response.user.displayName,
+          mail: response.user.email,
+        });
+      }
+    });
 };
-
-/*COMPROBAR USUARIOS*/
 
 /*FUNCION LOGIN*/
 async function login() {
@@ -61,20 +99,18 @@ async function login() {
     response = await firebase.auth().signInWithPopup(provider);
     userLog = response.user.displayName;
     document.querySelector(".quiz__user").innerHTML = `${userLog}`;
-    // document.querySelector(".question__user").innerHTML = `${userLog}`;
+    /*datos al sessionStorage*/
     let user = [
       {
         nombre: response.user.displayName,
         email: response.user.email,
       },
     ];
-
+    sessionStorage.setItem("user", JSON.stringify(user));
     /*datos al firebase*/
 
     crearUsuario();
-    
-    /*datos al localStorage*/
-    localStorage.setItem("user", JSON.stringify(user));
+    traerPartidas();
     /*boton de try*/
     document.querySelector(".home__buttom").style.display = "block";
     return response;
@@ -85,6 +121,11 @@ async function login() {
 
 /* FUNCTION LOGOUT*/
 const signOut = () => {
+  /*limpiar los arrays con datos anteriores*/
+  resuladosBdUsuario = [];
+  dateDbUsuario = [];
+  allUsers = [];
+  /*llamada al logOut*/
   let user = firebase.auth().currentUser;
   firebase
     .auth()
@@ -92,27 +133,47 @@ const signOut = () => {
     .then(() => {
       document.querySelector(".quiz__user").innerHTML = ``;
       document.querySelector(".home__buttom").style.display = "none";
+      document.querySelector(".home__canvas__default").style.display = "block";
+      document.querySelector(".home__canvas").style.display = "none";
       document
         .querySelector(".home__buttom__logout")
         .addEventListener("click", signOut);
     })
+
     .catch((error) => {
       console.log("hubo un error: " + error);
     });
 };
 
 /*FUNCION GRÁFICA HOME en base al log*/
-async function getVariables() {
+async function getVariablesUser() {
   try {
     var ctx = document.querySelector(".home__canvas");
     new Chart(ctx, {
-      type: "bar",
+      type: "line",
       data: {
-        labels: ["día1", "día2", "día3", "día4", "día5"],
+        labels: [
+          dateDbUsuario[0],
+          dateDbUsuario[1],
+          dateDbUsuario[2],
+          dateDbUsuario[3],
+          dateDbUsuario[0],
+        ],
         datasets: [
           {
-            label: "aciertos",
-            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            label: userLog,
+            data: [
+              resuladosBdUsuario[0],
+              resuladosBdUsuario[1],
+              resuladosBdUsuario[2],
+              resuladosBdUsuario[3],
+              resuladosBdUsuario[4],
+              1,
+              7,
+              8,
+              9,
+              10,
+            ],
             backgroundColor: ["rgb(56,163,165, 0.8)", "rgb(87,204,153, 0.8)"],
           },
         ],
@@ -123,37 +184,26 @@ async function getVariables() {
   }
 }
 
-/*SESION CONTINUA*/
-async function keep() {
+async function getVariablesDefault() {
   try {
-    firebase
-      .auth()
-      .setPersistence(firebase.auth.Auth.Persistence.NONE)
-      .then(() => {
-        var provider = new firebase.auth.GoogleAuthProvider();
-        // In memory persistence will be applied to the signed in Google user
-        // even though the persistence was set to 'none' and a page redirect
-        // occurred.
-        return firebase.auth().signInWithRedirect(provider);
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-      });
+    var ctx = document.querySelector(".home__canvas__default");
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"],
+        datasets: [
+          {
+            label: "Aciertos",
+            data: [3, 1, 7, 5, 9, 10],
+            backgroundColor: ["rgb(56,163,165, 0.8)", "rgb(87,204,153, 0.8)"],
+          },
+        ],
+      },
+    });
   } catch (error) {
-    throw new Error(error);
+    console.log(`ERROR Error: ${error.stack}`);
   }
 }
-
-/*continua sesion abierta*/
-// document
-//   .querySelector(".home__buttom")
-//   .addEventListener("click", async (e) => {
-//     try {
-//       await keep();
-//     } catch (error) {}
-//   });
 
 /*llamada al login con boton*/
 document
@@ -168,6 +218,5 @@ document
 signOut();
 
 /*llamada a la gráfica home*/
-getVariables();
 
-console.log(nameUser[0].nombre);
+getVariablesDefault();
