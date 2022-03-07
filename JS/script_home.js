@@ -25,12 +25,13 @@ let dateBd;
 /*VARIABLE DATABASE*/
 let provider = new firebase.auth.GoogleAuthProvider();
 firebase.auth().languageCode = "es";
-resuladosBdUsuario = [];
-dateDbUsuario = [];
+let resuladosBdUsuario = [];
+let dateDbUsuario = [];
 /*variables storage*/
 let nameUser = JSON.parse(sessionStorage.getItem("user"));
 let mailUser = JSON.parse(sessionStorage.getItem("mail"));
 let userLog;
+let allUsers = [];
 
 /*TRAER PUNTIUACIONES DEL USUARIO*/
 async function traerPartidas() {
@@ -47,7 +48,7 @@ async function traerPartidas() {
         }
       });
       /*array con todoas las puntuaciones de usuario en firebase*/
-      resuladosBdUsuario.sort((a, b) => a - b).reverse();
+      // resuladosBdUsuario.sort((a, b) => a - b).reverse();
       document.querySelector(".home__canvas__default").style.display = "none";
       document.querySelector(".home__canvas").style.display = "block";
       console.log(resuladosBdUsuario);
@@ -70,10 +71,26 @@ const traerUsuarios = () => {
 
 /*CREAR USUARIO FIREBASE*/
 crearUsuario = () => {
-  createUser({
-    nombre: response.user.displayName,
-    mail: response.user.email,
-  });
+  db.collection("quiz2")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        mailBd = doc.data().mail;
+        if (mailBd === response.user.email) {
+          allUsers.push(response.user.email);
+        }
+      });
+      console.log(allUsers.length);
+      if (allUsers.length >= 1) {
+        console.log("El usuario ya existe en firebase");
+      } else {
+        console.log("El usuario no existe");
+        createUser({
+          nombre: response.user.displayName,
+          mail: response.user.email,
+        });
+      }
+    });
 };
 
 /*FUNCION LOGIN*/
@@ -91,7 +108,8 @@ async function login() {
     ];
     sessionStorage.setItem("user", JSON.stringify(user));
     /*datos al firebase*/
-    // crearUsuario();
+
+    crearUsuario();
     traerPartidas();
     /*boton de try*/
     document.querySelector(".home__buttom").style.display = "block";
@@ -103,6 +121,11 @@ async function login() {
 
 /* FUNCTION LOGOUT*/
 const signOut = () => {
+  /*limpiar los arrays con datos anteriores*/
+  resuladosBdUsuario = [];
+  dateDbUsuario = [];
+  allUsers = [];
+  /*llamada al logOut*/
   let user = firebase.auth().currentUser;
   firebase
     .auth()
@@ -116,6 +139,7 @@ const signOut = () => {
         .querySelector(".home__buttom__logout")
         .addEventListener("click", signOut);
     })
+
     .catch((error) => {
       console.log("hubo un error: " + error);
     });
@@ -144,7 +168,7 @@ async function getVariablesUser() {
               resuladosBdUsuario[2],
               resuladosBdUsuario[3],
               resuladosBdUsuario[4],
-              6,
+              1,
               7,
               8,
               9,

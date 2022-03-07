@@ -20,7 +20,6 @@ const createUser = (user) => {
 /*VARIABLES GLOBALES*/
 
 /*Otras*/
-
 let response;
 let nameBd;
 let puntosBd;
@@ -31,16 +30,13 @@ firebase.auth().languageCode = "es";
 /*variables storage*/
 let nameUser = JSON.parse(sessionStorage.getItem("user"));
 let resultsUser = JSON.parse(sessionStorage.getItem("results"));
-let puntuacion = resultsUser[0].resultados
+let puntuacion = resultsUser[0].resultados;
 let userLog;
-
 /*PINTAR RESULTADOS*/
-
 document.querySelector(
   ".results__copy"
 ).innerHTML = `${puntuacion} HITS / 10 ANSWERS`;
 /*FUNCIÓN PARA IMPRIMIR  EL NOMBRE EN EL HEADER DE RESULTS DESDE FIREBASE*/
-
 const traerUsuario = () => {
   db.collection("quiz2")
     .get()
@@ -59,7 +55,7 @@ const traerUsuario = () => {
       });
     });
 };
-traerUsuario()
+traerUsuario();
 /*FUNCION GRÁFICA RESULTS en base al log*/
 async function getVariables2() {
   try {
@@ -67,12 +63,15 @@ async function getVariables2() {
     new Chart(ctx, {
       type: "pie",
       data: {
-        labels: [`${puntuacion} Successful answers`, `${10-puntuacion} Wrong answers`],
+        labels: [
+          `${puntuacion} Successful answers`,
+          `${10 - puntuacion} Wrong answers`,
+        ],
         datasets: [
           {
             label: "aciertos",
-            data: [puntuacion, 10-puntuacion],
-            backgroundColor: ["rgb(56,163,165, 0.8)", "rgb(87,204,153, 0.8)"]
+            data: [puntuacion, 10 - puntuacion],
+            backgroundColor: ["rgb(56,163,165, 0.8)", "rgb(87,204,153, 0.8)"],
           },
         ],
       },
@@ -81,4 +80,4 @@ async function getVariables2() {
     console.log(`ERROR Error: ${error.stack}`);
   }
 }
-getVariables2()
+getVariables2();
