@@ -56,6 +56,7 @@ a {
   justify-content: center;
 }
 .home__buttom__login {
+  cursor: pointer;
   background-color: #22577a;
   border-radius: 10px;
   border: 0px;
@@ -68,6 +69,7 @@ a {
   transition: 0.3s;
 }
 .home__buttom__logout {
+  cursor: pointer;
   background-color: #22577a;
   border-radius: 10px;
   border: 0px;
@@ -152,6 +154,8 @@ a {
   color: #22577a;
 }
 .home__buttom {
+  cursor: pointer;
+
   display: none;
   background-color: #22577a;
   border-radius: 10px;
@@ -249,6 +253,7 @@ a {
   background-color: #38a3a5;
 }
 .form__buttom_1 {
+  cursor: pointer;
   display: block;
   background-color: #22577a;
   border-radius: 10px;
@@ -269,6 +274,7 @@ a {
 }
 
 .form__buttom_2 {
+  cursor: pointer;
   display: none;
   background-color: #22577a;
   border-radius: 10px;
@@ -360,6 +366,7 @@ input[type="radio"]:checked + label {
 }
 
 .results__canvas {
+  cursor: pointer;
   margin-bottom: 0px;
   transform: scale(85%);
   margin-top: -15px;
@@ -385,6 +392,8 @@ input[type="radio"]:checked + label {
 }
 
 .results__buttom {
+  cursor: pointer;
+
   background-color: #22577a;
   border-radius: 10px;
   border: 0px;
