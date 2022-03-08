@@ -45,9 +45,7 @@ const traerUsuario = () => {
         nameBd = doc.data().nombre;
         mailBd = doc.data().mail;
         if (mailBd === nameUser[0].email) {
-          console.log(
-            nameBd + " es el usuario de firebase que esta jugando ahora mismo"
-          );
+          console.log(nameBd + " is playing now");
           document.querySelector(
             ".quiz__user__results"
           ).innerHTML = `${nameBd}`;

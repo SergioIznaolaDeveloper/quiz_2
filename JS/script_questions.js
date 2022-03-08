@@ -60,8 +60,6 @@ function randomizer() {
   return Math.floor(Math.random() * max) + min;
 }
 
-console.log(fecha);
-
 /*FUNCIÓN PARA IMPRIMIR  EL NOMBRE EN EL HEADER DE QUESTION DESDE FIREBASE*/
 const traerUsuario = () => {
   db.collection("quiz2")
@@ -72,7 +70,7 @@ const traerUsuario = () => {
         mailBd = doc.data().mail;
         if (mailBd === nameUser[0].email) {
           console.log(
-            nameBd + " es el usuario de firebase que esta jugando ahora mismo"
+            nameBd + " is playing now"
           );
           document.querySelector(
             ".quiz__user__question"
@@ -124,7 +122,6 @@ async function getQuestions() {
     let answers = randomQ.incorrect_answers;
     /*RESPUESTA CORRECTA*/
     correct_answer = randomQ.correct_answer;
-    console.log("Correcta - " + correct_answer);
     /*LISTA CON LAS 4 RESPUESTAS POSIBLES EN ORDEN ALEATORIO*/
     answers.push(correct_answer);
     answers.sort();
@@ -135,14 +132,12 @@ async function getQuestions() {
     document.querySelector("#r4").innerHTML = answers[3];
     document.querySelector(".form__question").innerHTML = question;
 
-    console.log(contador);
-    console.log(userAnsw);
+    console.log(`Hits - ${contador}`);
 
     /*LLAMADA A EVALUQUIZ*/
     document
       .querySelector(".form__section")
       .addEventListener("submit", evalQuiz);
-    // console.log(selection);
   } catch (error) {
     console.log(`ERROR Error: ${error.stack}`);
   }

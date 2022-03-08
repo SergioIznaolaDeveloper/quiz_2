@@ -13,7 +13,7 @@ const db = firebase.firestore();
 const createUser = (user) => {
   db.collection("quiz2")
     .add(user)
-    .then((docRef) => console.log("Document written with ID: ", docRef.id))
+    .then((docRef) => console.log("User written with ID: ", docRef.id))
     .catch((error) => console.error("Error adding document: ", error));
 };
 
@@ -47,12 +47,8 @@ async function traerPartidas() {
           dateDbUsuario.push(dateBd);
         }
       });
-      /*array con todoas las puntuaciones de usuario en firebase*/
-      // resuladosBdUsuario.sort((a, b) => a - b).reverse();
       document.querySelector(".home__canvas__default").style.display = "none";
       document.querySelector(".home__canvas").style.display = "block";
-      console.log(resuladosBdUsuario);
-      console.log(dateDbUsuario);
       getVariablesUser();
     });
 }
@@ -80,11 +76,9 @@ crearUsuario = () => {
           allUsers.push(response.user.email);
         }
       });
-      console.log(allUsers.length);
       if (allUsers.length >= 1) {
-        console.log("El usuario ya existe en firebase");
+        console.log("User alredy exist");
       } else {
-        console.log("El usuario no existe");
         createUser({
           nombre: response.user.displayName,
           mail: response.user.email,
@@ -183,7 +177,7 @@ async function getVariablesUser() {
     console.log(`ERROR Error: ${error.stack}`);
   }
 }
-
+/*FUNCION GRÁFICA HOME por defecto*/
 async function getVariablesDefault() {
   try {
     var ctx = document.querySelector(".home__canvas__default");
@@ -218,5 +212,4 @@ document
 signOut();
 
 /*llamada a la gráfica home*/
-
 getVariablesDefault();
